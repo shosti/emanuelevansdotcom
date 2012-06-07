@@ -1,0 +1,80 @@
+@import "1140";
+
+// Shades of gray
+
+$gray1: rgb(49, 51, 48);
+$gray2: rgb(70, 70, 70);
+$gray3: rgb(100, 100, 100);
+$gray4: rgb(139, 140, 139);
+$gray5: rgb(217, 217, 217);
+
+body {
+  background-color: $gray1;
+  color: $gray5;
+  font-family: Palatino, 'Palatino Linotype', 'Book Antiqua', serif;
+}
+
+h1 {
+  font-size: 66px;
+  font-weight: normal;
+  margin: 10px;
+  line-height: 100%;
+  padding-bottom: 10px;
+}
+
+h2 {
+  font-size: 44px;
+  font-weight: normal;
+}
+
+a {
+  text-decoration: none;
+  color: $gray2;
+  &:hover {
+    color: $gray3;
+  }
+}
+
+.info {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  text-align: center;
+  p {
+    text-align: justify;
+    margin-top: 16px;
+    font-size: 16px;
+    font-weight: lighter;
+  }
+}
+
+.navbar {
+  margin: 50px;
+  padding: 10px;
+  font-size: 26px;
+  color: $gray2;
+  line-height: 100%;
+  .active {
+    color: $gray4;
+  }
+  font-weight: lighter;
+  border: {
+    style: solid;
+    width: 1px;
+    left: {
+      style: none;
+    }
+    right: {
+      style: none;
+    }
+  }
+}
+
+.picture {
+  margin-top: 40px;
+  text-align: right;
+  margin-right: 0px;
+  .caption {
+    margin-top: 2px;
+    font-size: 12px;
+  }
+}
