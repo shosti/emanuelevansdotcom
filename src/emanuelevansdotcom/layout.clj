@@ -1,18 +1,17 @@
 (ns emanuelevansdotcom.layout
-  (:use [hiccup.page]))
+  (:use (hiccup page element)))
 
 (def page
   (html5
    [:head
     [:meta {:charset "utf-8"}]
-    [:title  "Emanuel Evans, Cellist"]
+    [:title "Emanuel Evans, Cellist"]
     [:meta {:name "viewport", :content "width=device-width, initial-scale=1.0"}]
     "<!--[if lte IE 9]>
 <link rel=\"stylesheet\" href=\"css/ie.css\" type=\"text/css\" media=\"screen\" />
 <![endif]-->"
-    [:link {:rel "stylesheet", :href "css/style.css", :type "text/css", :media "screen"}]
-    [:script {:type "text/javascript", :src "js/css3-mediaqueries.js"}]
-    [:script {:type "text/javascript", :src "js/modernizr.js"}]]
+    (include-css "css/style.css")
+    (include-js "js/css3-mediaqueries.js")]
    [:body
     [:div.container
      [:div.row
@@ -22,9 +21,9 @@
         [:h2 "Cellist"]]
        [:div.navbar
         [:span.active "About"] " | "
-        [:a {:href "#"} "Concerts"] " | "
-        [:a {:href "#"} "Listen"] " | "
-        [:a {:href "#"} "Contact"]]
+        (link-to "#" "Concerts") " | "
+        (link-to "#" "Listen") " | "
+        (link-to "#" "Contact")]
        [:p
         "Lorem ipsum dolor sit amet, consectetur adipisicing elit,\n
         sed do eiusmod tempor incididunt ut labore et dolore magna\n
@@ -35,6 +34,6 @@
         pariatur. Excepteur sint occaecat cupidatat non proident,\n
         sunt in culpa qui officia deserunt mollit anim id est\n
         laborum."]]
-      [:div {:class "sixcol last picture"}
-       [:img {:src "images/drawing.jpg"}]
-       [:div {:class "caption"} "Artwork by Marisha Evans"]]]]]))
+      [:div.sixcol.last.picture
+       (image "images/drawing.jpg" "Drawing of Emanuel Evans by Marisha Evans")
+       [:div.caption "Artwork by Marisha Evans"]]]]]))
