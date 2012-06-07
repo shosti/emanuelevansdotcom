@@ -29,6 +29,12 @@ task :clean do
   rm_rf 'site'
 end
 
+desc 'Preview site'
+task :preview => :build_site do
+  sh 'open site/about.html'
+end
+
+desc 'Build site'
 task :build_site => [site_stylesheet, :assets, :html]
 
 task :default => :build_site
