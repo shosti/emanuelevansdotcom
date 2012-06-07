@@ -1,6 +1,7 @@
-(ns emanuelevansdotcom.core)
+(ns emanuelevansdotcom.core
+  (:use emanuelevansdotcom.layout))
 
 (defn -main
   "I don't do a whole lot."
   [& args]
-  (println "Hello, World!"))
+  (spit "site/index.html" page))
