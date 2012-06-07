@@ -1,5 +1,5 @@
 (ns emanuelevansdotcom.layout
-  (:require (emanuelevansdotcom [core :refer [file-exists? pages]])
+  (:require (emanuelevansdotcom [pages :refer [page-names]])
             (clojure [string  :as s])
             (hiccup  [core    :refer [html]]
                      [element :refer [link-to image]]
@@ -18,7 +18,7 @@ type=\"text/css\" media=\"screen\" /> <![end if]-->")
                        [:span.active (s/capitalize page)]
                        (link-to (str page ".html")
                                 (s/capitalize page))))
-                   pages))])
+                   page-names))])
 
 (defn site-page [{:keys [page-name content img-name img-caption]}]
   (html5
@@ -41,9 +41,3 @@ type=\"text/css\" media=\"screen\" /> <![end if]-->")
       [:div.sixcol.last.picture
        (image (str "images/" img-name) "")
        [:div.caption img-caption]]]]]))
-
-(defn body-content [page-name]
-  (let [md-fname (str "resources/pages/" page-name ".md")]
-    (if (file-exists? md-fname)
-      (md (slurp md-fname))
-      "")))

@@ -1,9 +1,16 @@
-(ns emanuelevansdotcom.pages
-  (:require (emanuelevansdotcom [layout :refer [site-page
-                                                body-content]])))
+(ns emanuelevansdotcom.pages)
 
-(def about-page
-  (site-page {:page-name "about"
-              :body (body-content "about")
-              :img-name "drawing.jpg"
-              :img-caption "Artwork by Marisha Evans"}))
+(def pages
+  (array-map
+   :about {    :img-name "drawing.jpg"
+               :img-caption "Artwork by Marisha Evans"}
+   :concerts { :content-fn (fn [_] "I am special")
+               :img-name "drawing.jpg"
+               :img-caption "Artwork by Marisha Evans"}
+   :listen {   :img-name "drawing.jpg"
+               :img-caption "Artwork by Marisha Evans"}
+   :contact {  :img-name "drawing.jpg"
+               :img-caption "Artwork by Marisha Evans"}))
+
+(def page-names
+  (map name (keys pages)))
