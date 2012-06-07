@@ -1,15 +1,32 @@
 (ns emanuelevansdotcom.layout
-  (:use (hiccup page element)))
+  (:require (emanuelevansdotcom [core :refer [file-exists? pages]])
+            (clojure [string  :as s])
+            (hiccup  [core    :refer [html]]
+                     [element :refer [link-to image]]
+                     [page    :refer [html5 include-css include-js]])
+            (clodown [core    :refer [md]])))
 
-(def page
+(def compatibility
+  "<!--[if lte IE 9]> <link rel=\"stylesheet\" href=\"css/ie.css\"
+type=\"text/css\" media=\"screen\" /> <![end if]-->")
+
+(defn navbar [active-page]
+  [:div.navbar
+   (interpose " | "
+              (map (fn [page]
+                     (if (= page active-page)
+                       [:span.active (s/capitalize page)]
+                       (link-to (str page ".html")
+                                (s/capitalize page))))
+                   pages))])
+
+(defn site-page [{:keys [page-name content img-name img-caption]}]
   (html5
    [:head
     [:meta {:charset "utf-8"}]
-    [:title "Emanuel Evans, Cellist"]
+    [:title "Emanuel Evans, Cellist - " (s/capitalize page-name)]
     [:meta {:name "viewport", :content "width=device-width, initial-scale=1.0"}]
-    "<!--[if lte IE 9]>
-<link rel=\"stylesheet\" href=\"css/ie.css\" type=\"text/css\" media=\"screen\" />
-<![endif]-->"
+    compatibility
     (include-css "css/style.css")
     (include-js "js/css3-mediaqueries.js")]
    [:body
@@ -19,21 +36,14 @@
        [:div
         [:h1 "Emanuel Evans"]
         [:h2 "Cellist"]]
-       [:div.navbar
-        [:span.active "About"] " | "
-        (link-to "#" "Concerts") " | "
-        (link-to "#" "Listen") " | "
-        (link-to "#" "Contact")]
-       [:p
-        "Lorem ipsum dolor sit amet, consectetur adipisicing elit,\n
-        sed do eiusmod tempor incididunt ut labore et dolore magna\n
-        aliqua. Ut enim ad minim veniam, quis nostrud exercitation\n
-        ullamco laboris nisi ut aliquip ex ea commodo\n
-        consequat. Duis aute irure dolor in reprehenderit in\n
-        voluptate velit esse cillum dolore eu fugiat nulla\n
-        pariatur. Excepteur sint occaecat cupidatat non proident,\n
-        sunt in culpa qui officia deserunt mollit anim id est\n
-        laborum."]]
+       (navbar page-name)
+       content]
       [:div.sixcol.last.picture
-       (image "images/drawing.jpg" "Drawing of Emanuel Evans by Marisha Evans")
-       [:div.caption "Artwork by Marisha Evans"]]]]]))
+       (image (str "images/" img-name) "")
+       [:div.caption img-caption]]]]]))
+
+(defn body-content [page-name]
+  (let [md-fname (str "resources/pages/" page-name ".md")]
+    (if (file-exists? md-fname)
+      (md (slurp md-fname))
+      "")))
