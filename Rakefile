@@ -6,7 +6,9 @@ directory css_dir
 
 desc 'Generate the html for the site'
 task :html => 'site' do
-  sh 'lein run'
+  gen_files = Dir.glob('src/emanuelevansdotcom/*') +
+    Dir.glob('resources/pages/*')
+  sh 'lein run' unless uptodate? 'site/about.html', gen_files
 end
 
 desc 'Copy static assets to site'
@@ -20,7 +22,7 @@ file site_stylesheet => ['resources/scss/style.scss', css_dir] do |t|
 end
 
 desc 'Deploy website to S3'
-task :deploy do
+task :deploy => :build_site do
   sh 's3cmd sync site/ s3://www.emanuelevans.com --exclude=".DS_Store" --cf-invalidate'
 end
 
