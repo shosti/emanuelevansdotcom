@@ -7,4 +7,5 @@
   :dependencies [[org.clojure/clojure "1.4.0"]
                  [hiccup "1.0.0"]
                  [clodown "1.0.2"]
-                 [clj-time "0.4.2"]])
+                 [clj-time "0.4.2"]
+                 [clj-http "0.4.3"]])

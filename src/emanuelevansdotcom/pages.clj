@@ -1,11 +1,15 @@
-(ns emanuelevansdotcom.pages)
+(ns emanuelevansdotcom.pages
+  ;; (:require (emanuelevansdotcom [cal :refer format-cal]))
+  )
 
 (def pages
   (array-map
    :about {    :img-name "drawing.jpg"
                :img-caption "Artwork by Marisha Evans"}
-   :concerts { :content-fn (fn [_] "I am special")
+   :concerts {; :content-fn format-cal
                :img-name "drawing.jpg"
+               :img-caption "Artwork by Marisha Evans"}
+   :teaching { :img-name "drawing.jpg"
                :img-caption "Artwork by Marisha Evans"}
    :listen {   :img-name "drawing.jpg"
                :img-caption "Artwork by Marisha Evans"}
