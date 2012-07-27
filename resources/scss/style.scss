@@ -29,10 +29,6 @@ h2 {
 
 a {
   text-decoration: none;
-  color: $gray2;
-  &:hover {
-    color: $gray3;
-  }
 }
 
 .info {
@@ -43,18 +39,31 @@ a {
     text-align: justify;
     margin-top: 16px;
     font-size: 16px;
-    font-weight: lighter;
+    line-height: 130%;
+  }
+  a {
+    color: $gray3;
+    &:hover {
+      color: $gray4;
+    }
   }
 }
 
 .navbar {
-  margin: 50px;
+  margin-top: 50px;
+  margin-bottom: 40px;
   padding: 10px;
-  font-size: 26px;
+  font-size: 18px;
   color: $gray2;
   line-height: 100%;
   .active {
     color: $gray4;
+  }
+  a {
+    color: $gray2;
+    &:hover {
+      color: $gray3;
+    }
   }
   font-weight: lighter;
   border: {
