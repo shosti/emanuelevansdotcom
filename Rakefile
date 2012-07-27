@@ -13,7 +13,7 @@ end
 
 desc 'Copy static assets to site'
 task :assets do
-  sh 'rsync -av resources/assets/ site --exclude=".*"'
+  sh 'rsync -a resources/assets/ site --exclude=".*"'
 end
 
 desc 'Compile scss to css'
