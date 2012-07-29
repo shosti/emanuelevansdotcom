@@ -11,8 +11,18 @@ task :html => 'site' do
   sh 'lein run' unless uptodate? 'site/about.html', gen_files
 end
 
+desc 'Encode ogg versions of mp3 files'
+task :encode_ogg do
+  Dir.glob('resources/assets/audio/*.mp3').each do |mp3_file|
+    ogg_file = mp3_file.split('.mp3')[0] + '.ogg'
+    unless uptodate? ogg_file, [mp3_file]
+      sh "ffmpeg -i #{mp3_file} -acodec libvorbis -aq 6 #{ogg_file}"
+    end
+  end
+end
+
 desc 'Copy static assets to site'
-task :assets do
+task :assets => :encode_ogg do
   sh 'rsync -a resources/assets/ site --exclude=".*"'
 end
 
