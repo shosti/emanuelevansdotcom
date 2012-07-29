@@ -3,8 +3,7 @@
             (clojure [string  :as s])
             (hiccup  [core    :refer [html]]
                      [element :refer [link-to image]]
-                     [page    :refer [html5 include-css include-js]])
-            (clodown [core    :refer [md]])))
+                     [page    :refer [html5 include-css include-js]])))
 
 (def compatibility
   "<!--[if lte IE 9]> <link rel=\"stylesheet\" href=\"css/ie.css\"
@@ -25,7 +24,8 @@ type=\"text/css\" media=\"screen\" /> <![end if]-->")
    [:head
     [:meta {:charset "utf-8"}]
     [:title "Emanuel Evans, Cellist - " (s/capitalize page-name)]
-    [:meta {:name "viewport", :content "width=device-width, initial-scale=1.0"}]
+    [:meta {:name "viewport",
+            :content "width=device-width, initial-scale=1.0"}]
     compatibility
     (include-css "css/style.css")
     (include-js "js/css3-mediaqueries.js")]

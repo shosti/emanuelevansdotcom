@@ -7,6 +7,7 @@ $gray2: rgb(70, 70, 70);
 $gray3: rgb(100, 100, 100);
 $gray4: rgb(139, 140, 139);
 $gray5: rgb(217, 217, 217);
+$side-margin: 15px;
 
 body {
   background-color: $gray1;
@@ -27,6 +28,14 @@ h2 {
   font-weight: normal;
 }
 
+h3 {
+  font-size: 25px;
+  font-weight: normal;
+  text-align: left;
+  margin-left: $side-margin;
+  padding-bottom: 10px;
+}
+
 a {
   text-decoration: none;
 }
@@ -36,15 +45,21 @@ a {
   margin-bottom: 20px;
   text-align: center;
   p {
+    margin-left: $side-margin;
+    margin-right: $side-margin;
     text-align: justify;
     margin-top: 16px;
     font-size: 16px;
     line-height: 130%;
   }
+  div {
+    margin-left: $side-margin;
+    margin-right: $side-margin;
+  }
   a {
-    color: $gray3;
+    color: $gray4;
     &:hover {
-      color: $gray4;
+      color: $gray5;
     }
   }
 }

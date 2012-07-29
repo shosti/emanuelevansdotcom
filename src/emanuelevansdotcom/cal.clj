@@ -1,15 +1,17 @@
-(ns emanuelevansdotcom.cal
+ (ns emanuelevansdotcom.cal
+  (:refer-clojure :exclude [extend])
   (:require (clojure  [string :as s])
             (clj-http [client :as client])
             (cheshire [core :as json])
-            (clj-time [core :as t]
-                      [format :as time-format])
-            (hiccup   [element :refer [link-to]])))
+            (clj-time [core :refer :all]
+                      [format :refer [parse]])
+            (hiccup   [element :refer [link-to]]))
+  (:import java.net.URLEncoder))
 
 "# Get and process json data"
 
 (defn get-gcal-json
-  "Fetch calendar data from google"
+  "Fetch calendar data from Google"
   [cal-id api-key]
   (try
     (:body
@@ -21,15 +23,32 @@
     (catch Exception e
       (prn (str "Could not fetch json: " e)))))
 
-(defn process-json-date [d]
-  (time-format/parse (first (vals d))))
+(defn process-description
+  [description]
+  (let [lines (s/split-lines description)
+        link (first lines)
+        desc (filter #(not (= % "")) (rest lines))]
+    {:link link
+     :description (interpose [:br] desc)}))
+
+(defn process-location
+  [location]
+  {:location
+   (link-to (str "http://maps.google.com/maps?q="
+                 (URLEncoder/encode location))
+            (interpose [:br]
+                       (map s/trim (s/split location #";"))))})
 
 (defn process-gcal-event
   [event]
   (-> event
-     (select-keys [:htmlLink :location :summary :description])
-     (merge {:start (process-json-date (:start event))
-             :end (process-json-date (:end event))})))
+     (select-keys [:summary])
+     (merge {:date (to-time-zone
+                    (parse (:dateTime (:start event)))
+                    (time-zone-for-id (:timeZone
+                                         (:start event))))})
+     (merge (process-description (:description event)))
+     (merge (process-location (:location event)))))
 
 (defn gcal-json->event-list [json]
   (try
@@ -52,25 +71,74 @@
             (get-gcal-json cal-id api-key))))
 
 (defn -main [& args]
+  (prn "Fetching calendar...")
   (fetch-cal))
 
 "# Generate html from event list"
 
+(defn format-date [d]
+  (let [days [""
+              "Monday"
+              "Tuesday"
+              "Wednesday"
+              "Thursday"
+              "Friday"
+              "Saturday"
+              "Sunday"]
+        months [""
+                "January"
+                "February"
+                "March"
+                "April"
+                "May"
+                "June"
+                "July"
+                "August"
+                "September"
+                "October"
+                "November"
+                "December"]]
+    (str (days (day-of-week d))
+         ", "
+         (months (month d))
+         " "
+         (day d)
+         ", "
+         (year d)
+         ", "
+         (.toString d "h:mm")
+         (if (< (hour d) 12)
+           " AM"
+           " PM"))))
+
 (defn sort-events [events]
-  (let [now (t/now)
+  (let [now (now)
         split-events
         (->> events
-             (sort-by :start)
-             (split-with #(t/before? (:start %) now)))]
+             (sort-by :date)
+             (split-with #(before? (:date %) now)))]
     {:past (reverse (first split-events))
      :upcoming (fnext split-events)}))
 
 (defn format-event [event]
   [:p
-   [:strong {:start event}
-    (if-let [end {:end event}] (str "-" end))] [:br]
-   ])
+   (interpose [:br]
+              [[:strong (format-date (:date event))]
+               [:strong (link-to (:link event)
+                                 (:summary event))]
+               (:location event)
+               (:description event)])])
 
-(defn format-cal [_]
-  (let [events (events)]
-    nil))
+(defn cal-content [_]
+  (let [events (sort-events (events))]
+    (concat
+     (if-let [upcoming
+              (seq (map format-event
+                        (:upcoming events)))]
+       [[:h3 "Upcoming"]
+        upcoming])
+     (if-let [past
+              (seq (map format-event
+                        (take 10 (:past events))))]
+       [[:h3 "Past"]
+        past]))))
