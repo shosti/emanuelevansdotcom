@@ -24,7 +24,7 @@ Emanuel's principal teachers include Natasha Brofsky, Paul Katz,
 Sophie Shao, and Peter Wiley.  He completed his undergraduate studies
 at the Bard College Conservatory of Music, where he was the recipient
 of the George Martin/Hans Thatcher Clarke Scholarship, and received a
-masters degree from New England Conservatory.  He is currently
+master's degree from New England Conservatory.  He is currently
 pursuing an Artist Certificate in Chamber Music from the San Francisco
 Conservatory of Music under the tutelage of Jean-Michel Fonteneau.
 
