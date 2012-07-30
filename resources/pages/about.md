@@ -5,9 +5,9 @@ Hall in Boston, Alice Tully Hall in New York, and the Franz Liszt
 Memorial Museum in Budapest and has performed in masterclasses for
 artists such as Ani Kavafian and Jian Wang.  Emanuel made his solo
 debut with the Boulder Philharmonic in 2005; as an orchestral
-musician, he has appeared with the Boston Philharmonic Orchestra, the
-New World Symphony, and Music Academy of the West and has served as
-principal cellist of the NEC Opera Orchestra, the Bard Conservatory
+musician, he has appeared with the New World Symphony, the Boston
+Philharmonic Orchestra, and Music Academy of the West and has served
+as principal cellist of the NEC Opera Orchestra, the Bard Conservatory
 Orchestra, and the Denver Young Artists Orchestra.
 
 Emanuel's greatest musical passion is chamber music.  He has twice
