@@ -7,7 +7,7 @@ directory css_dir
 desc 'Generate the html for the site'
 task :html => 'site' do
   gen_files = Dir.glob('src/emanuelevansdotcom/*') +
-    Dir.glob('resources/pages/*')
+    Dir.glob('resources/pages/*') + Dir.glob('resources/assets/audio/*')
   sh 'lein run' unless uptodate? 'site/about.html', gen_files
 end
 
