@@ -3,7 +3,7 @@
             (clojure.java [io :as io])
             (hiccup       [element :refer [link-to]])))
 
-(def audio-re #"\d+_(.+).mp3")
+(def audio-re #"\d+_(.+).aiff")
 
 (defn format-audio [fname]
   (let [[_ t] (re-find audio-re fname)
@@ -13,9 +13,9 @@
      [:strong audio-title]
      [:br]
      [:audio {:controls "controls"}
-      [:source {:src audio-path,
+      [:source {:src (s/replace audio-path #"aiff" "mp3")
                 :type "audio/mpeg"}]
-      [:source {:src (s/replace audio-path #"mp3" "ogg")
+      [:source {:src (s/replace audio-path #"aiff" "ogg")
                 :type "audio/ogg"}]
       (link-to audio-path "Listen now")]]))
 
@@ -29,4 +29,4 @@
        (filter #(re-matches audio-re %))))
 
 (defn listen-content [_]
-  (map format-audio (list-audio-files "resources/assets/audio")))
+  (map format-audio (list-audio-files "resources/audio")))

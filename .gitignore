@@ -3,6 +3,7 @@
 /classes
 /checkouts
 /resources/private
+/resources/audio
 /resources/assets/audio
 pom.xml
 *.jar

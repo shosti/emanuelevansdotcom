@@ -7,22 +7,27 @@ directory css_dir
 desc 'Generate the html for the site'
 task :html => 'site' do
   gen_files = Dir.glob('src/emanuelevansdotcom/*') +
-    Dir.glob('resources/pages/*') + Dir.glob('resources/assets/audio/*')
+    Dir.glob('resources/pages/*') + Dir.glob('resources/audio/*')
   sh 'lein run' unless uptodate? 'site/about.html', gen_files
 end
 
-desc 'Encode ogg versions of mp3 files'
-task :encode_ogg do
-  Dir.glob('resources/assets/audio/*.mp3').each do |mp3_file|
-    ogg_file = mp3_file.split('.mp3')[0] + '.ogg'
-    unless uptodate? ogg_file, [mp3_file]
-      sh "ffmpeg -i #{mp3_file} -acodec libvorbis -aq 6 #{ogg_file}"
+desc 'Encode mp3 and ogg versions of audio files'
+task :encode_audio do
+  Dir.glob('resources/audio/*.aiff').each do |source_file|
+    out_dir = 'resources/assets/audio/'
+    mp3_file = out_dir + File.basename(source_file, 'aiff') + 'mp3'
+    ogg_file = out_dir + File.basename(source_file, 'aiff') + 'ogg'
+    unless uptodate? mp3_file, [source_file]
+      sh "ffmpeg -i #{source_file} -acodec libmp3lame -ac 1 -ab 64k #{mp3_file}"
+    end
+    unless uptodate? ogg_file, [source_file]
+      sh "ffmpeg -i #{source_file} -acodec libvorbis -ac 1 #{ogg_file}"
     end
   end
 end
 
 desc 'Copy static assets to site'
-task :assets => :encode_ogg do
+task :assets => :encode_audio do
   sh 'rsync -a resources/assets/ site --exclude=".*"'
 end
 
