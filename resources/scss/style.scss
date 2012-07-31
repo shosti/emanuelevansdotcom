@@ -56,6 +56,9 @@ a {
     margin-left: $side-margin;
     margin-right: $side-margin;
   }
+  .caption {
+    font-size: 14px;
+  }
   a {
     color: $gray4;
     &:hover {
