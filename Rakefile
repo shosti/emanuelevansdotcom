@@ -26,6 +26,11 @@ task :encode_audio do
   end
 end
 
+desc 'Fetch calendar data from gcal'
+task :fetch_cal do
+  sh 'lein run -m emanuelevansdotcom.cal'
+end
+
 desc 'Copy static assets to site'
 task :assets => :encode_audio do
   sh 'rsync -a resources/assets/ site --exclude=".*"'
@@ -37,7 +42,7 @@ file site_stylesheet => ['resources/scss/style.scss', css_dir] do |t|
 end
 
 desc 'Deploy website to S3'
-task :deploy => :build_site do
+task :deploy => [:fetch_cal, :build_site] do
   sh 's3cmd sync site/ s3://www.emanuelevans.com --exclude=".DS_Store" --cf-invalidate'
 end
 
