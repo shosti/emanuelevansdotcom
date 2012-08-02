@@ -1,13 +1,17 @@
 (ns emanuelevansdotcom.listen
   (:require (clojure      [string :as s])
-            (clojure.java [io :as io])
+            (clojure.java [io :refer [file]])
             (hiccup       [element :refer [link-to]])))
 
 (def audio-re #"(\d+)_(.+).aiff")
+(def audio-src-dir "resources/audio/")
 
-(def captions
-  {"2" (link-to "http://www.allegrachapman.com"
-                "Allegra Chapman, piano")})
+(defn captions [audio-number]
+  (try
+    (s/trim
+     (slurp (str audio-src-dir audio-number ".caption")))
+    (catch Exception e
+      nil)))
 
 (defn format-audio [fname]
   (let [[_ audio-number t] (re-find audio-re fname)
@@ -27,7 +31,7 @@
 
 (defn list-audio-files [dir]
   (->> dir
-       (io/file)
+       (file)
        (file-seq)
        (map str)
        (map #(s/split % #"/"))
@@ -35,4 +39,4 @@
        (filter #(re-matches audio-re %))))
 
 (defn listen-content [_]
-  (map format-audio (list-audio-files "resources/audio")))
+  (map format-audio (list-audio-files audio-src-dir)))
