@@ -7,7 +7,7 @@
 
 (def compatibility
   "<!--[if lte IE 9]> <link rel=\"stylesheet\" href=\"css/ie.css\"
-type=\"text/css\" media=\"screen\" /> <![end if]-->")
+type=\"text/css\" media=\"screen\" /> <![endif]-->")
 
 (defn navbar [active-page]
   [:div.navbar
