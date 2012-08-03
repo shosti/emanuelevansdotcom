@@ -16,18 +16,20 @@
 (defn format-audio [fname]
   (let [[_ audio-number t] (re-find audio-re fname)
         audio-title (s/replace t #"_" " ")
-        audio-path (str "audio/" fname)]
+        audio-path (str "audio/" fname)
+        mp3-path (s/replace audio-path #"aiff" "mp3")
+        ogg-path (s/replace audio-path #"aiff" "ogg")]
     [:p
      [:strong audio-title]
      [:br]
      (if-let [caption (captions audio-number)]
        (list [:span.caption caption] [:br]))
      [:audio {:controls "controls"}
-      [:source {:src (s/replace audio-path #"aiff" "mp3")
+      [:source {:src mp3-path
                 :type "audio/mpeg"}]
-      [:source {:src (s/replace audio-path #"aiff" "ogg")
+      [:source {:src ogg-path
                 :type "audio/ogg"}]
-      (link-to audio-path "Listen now")]]))
+      (link-to mp3-path "Listen now")]]))
 
 (defn list-audio-files [dir]
   (->> dir

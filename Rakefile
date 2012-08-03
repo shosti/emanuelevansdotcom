@@ -42,7 +42,7 @@ file site_stylesheet => ['resources/scss/style.scss', css_dir] do |t|
 end
 
 desc 'Deploy website to S3'
-task :deploy => [:fetch_cal, :build_site] do
+task :deploy => [:build_site] do
   sh 's3cmd sync site/ s3://www.emanuelevans.com --exclude=".DS_Store" --cf-invalidate'
 end
 
