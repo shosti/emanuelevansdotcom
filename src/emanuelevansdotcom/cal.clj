@@ -1,4 +1,4 @@
- (ns emanuelevansdotcom.cal
+(ns emanuelevansdotcom.cal
   (:refer-clojure :exclude [extend])
   (:require (clojure  [string :as s])
             (clj-http [client :as client])
@@ -64,11 +64,15 @@
 (defn events []
   (gcal-json->event-list (slurp cal-json-file)))
 
+(defn cal-id []
+  (s/trim (slurp "resources/private/cal-id")))
+
+(defn api-key []
+  (s/trim (slurp "resources/private/api-key")))
+
 (defn fetch-cal []
-    (let [api-key (s/trim (slurp "resources/private/api-key"))
-          cal-id (s/trim (slurp "resources/private/cal-id"))]
-      (spit cal-json-file
-            (get-gcal-json cal-id api-key))))
+  (spit cal-json-file
+        (get-gcal-json (cal-id) (api-key))))
 
 (defn -main [& args]
   (prn "Fetching calendar...")
@@ -141,4 +145,10 @@
               (seq (map format-event
                         (take 10 (:past events))))]
        [[:h3 "Past"]
-        past]))))
+        past])
+     [[:p.caption
+       (link-to
+        (str "https://www.google.com/calendar/ical/"
+             (URLEncoder/encode (cal-id))
+             "/public/basic.ics")
+        "Subscribe with iCal")]])))
