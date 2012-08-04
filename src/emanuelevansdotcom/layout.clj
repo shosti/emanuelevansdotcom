@@ -9,6 +9,21 @@
   "<!--[if lte IE 9]> <link rel=\"stylesheet\" href=\"css/ie.css\"
 type=\"text/css\" media=\"screen\" /> <![endif]-->")
 
+(def analytics
+  "<script type=\"text/javascript\">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-33865685-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>")
+
 (defn navbar [active-page]
   [:div.navbar
    (interpose " | "
@@ -20,13 +35,14 @@ type=\"text/css\" media=\"screen\" /> <![endif]-->")
                    page-names))])
 
 (defn site-page [{:keys [page-name content img-name img-caption]}]
-  (html5
+  (html5 {:lang "en-us"}
    [:head
     [:meta {:charset "utf-8"}]
     [:title "Emanuel Evans, Cellist - " (s/capitalize page-name)]
     [:meta {:name "viewport",
             :content "width=device-width, initial-scale=1.0"}]
     compatibility
+    analytics
     (include-css "css/style.css")
     (include-js "js/css3-mediaqueries.js")]
    [:body

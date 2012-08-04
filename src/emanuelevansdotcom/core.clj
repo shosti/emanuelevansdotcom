@@ -1,6 +1,7 @@
 (ns emanuelevansdotcom.core
   (:require (emanuelevansdotcom [pages :refer [pages page-names]]
                                 [layout :refer [site-page]])
+            (clojure [string :as s])
             (clojure.java [io :refer [file]])
             (clodown [core :refer [md]])))
 
@@ -20,6 +21,12 @@
                      {:page-name page-name
                       :content (content-fn page-name)}))))
 
+(defn generate-sitemap []
+  (spit "site/sitemap.txt"
+        (s/join "\n"
+                (map #(str "http://www.emanuelevans.com/" % ".html")
+                     page-names))))
+
 (def html-pages
   (map vector page-names
        (map page-html pages)))
@@ -30,6 +37,7 @@
           (html-page 1))))
 
 (defn -main
-  "I don't do a whole lot."
+  "Generate html and sitemap."
   [& args]
-  (generate-html))
+  (generate-html)
+  (generate-sitemap))
