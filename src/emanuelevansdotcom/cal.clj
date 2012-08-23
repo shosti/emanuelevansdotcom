@@ -134,7 +134,11 @@
                (:description event)])])
 
 (defn cal-content [_]
-  (let [events (sort-events (events))]
+  (let [events (sort-events (events))
+        ical-address
+        (str "https://www.google.com/calendar/ical/"
+             (URLEncoder/encode (cal-id))
+             "/public/basic.ics")]
     (concat
      (if-let [upcoming
               (seq (map format-event
@@ -148,7 +152,9 @@
         past])
      [[:p.caption
        (link-to
-        (str "https://www.google.com/calendar/ical/"
-             (URLEncoder/encode (cal-id))
-             "/public/basic.ics")
-        "Subscribe with iCal")]])))
+        (str "http://www.google.com/calendar/render?"
+             ical-address)
+        "Subscribe with Google Calendar")
+       [:br]
+       (link-to ical-address
+                "Subscribe with Apple Calendar")]])))
