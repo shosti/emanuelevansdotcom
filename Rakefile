@@ -43,7 +43,7 @@ end
 
 desc 'Deploy website to S3'
 task :deploy => [:build_site] do
-  sh 's3cmd sync site/ s3://www.emanuelevans.com --exclude=".DS_Store" --cf-invalidate'
+  sh 's3cmd sync site/ s3://www.emanuelevans.com --exclude=".DS_Store"'
 end
 
 desc 'Clean site directory'
