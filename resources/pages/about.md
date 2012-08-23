@@ -15,10 +15,10 @@ attended the Taos School of Music, under the guidance of the Borromeo,
 Shanghai, and Brentano Quartets; he has also studied chamber music
 with members of the Cleveland, Guarneri, Orion, and Takács Quartets.
 In 2011, as a member of the NEC Honors Competition-winning Canoro
-Quartet, he performed in Jordan Hall with Roger Tapping.  An avid fan
-of twentieth- and twenty-first-century music, Emanuel has premiered
-several works by young composers including Derek Sherron and Shen
-Yiwen.
+Quartet, he performed in Jordan Hall with Roger Tapping.  An avid
+proponent of twentieth- and twenty-first-century music, Emanuel has
+premiered several works by young composers including Derek Sherron and
+Shen Yiwen.
 
 Emanuel's principal teachers include Natasha Brofsky, Paul Katz,
 Sophie Shao, and Peter Wiley.  He completed his undergraduate studies
@@ -34,4 +34,5 @@ Political Studies.  He has worked as an intern for Congressman Jared
 Polis' office in Boulder, the Center for UN Reform Education in New
 York City, and the International Centre for Democratic Transition in
 Budapest.  When not playing cello, Emanuel enjoys cooking, reading
-fiction, computer programming, and hiking.
+fiction, computer programming, and hiking.  Emanuel plays a cello by
+[Lawrence Wilke](http://wilkecellos.com/Welcome.html) dated 2004.  
