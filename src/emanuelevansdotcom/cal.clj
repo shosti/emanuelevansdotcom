@@ -152,7 +152,7 @@
         past])
      [[:p.caption
        (link-to
-        (str "http://www.google.com/calendar/render?"
+        (str "http://www.google.com/calendar/render?cid="
              ical-address)
         "Subscribe with Google Calendar")
        [:br]
