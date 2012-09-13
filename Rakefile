@@ -26,13 +26,18 @@ task :encode_audio do
   end
 end
 
+desc 'Optimize images'
+task :optimize_img do
+  sh "jpegoptim --strip-all resources/assets/images/*.jpg"
+end
+
 desc 'Fetch calendar data from gcal'
 task :fetch_cal do
   sh 'lein run -m emanuelevansdotcom.cal'
 end
 
 desc 'Copy static assets to site'
-task :assets => :encode_audio do
+task :assets => [:encode_audio, :optimize_img] do
   sh 'rsync -a resources/assets/ site --exclude=".*"'
 end
 
