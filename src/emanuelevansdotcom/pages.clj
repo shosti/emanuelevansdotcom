@@ -4,13 +4,13 @@
 
 (def pages
   (array-map
-   :about {    :img-name "drawing.jpg"
-               :img-caption "Artwork by Marisha Evans"}
+   :about {    :img-name "photo.jpg"
+               :img-caption "Photo by Allegra Chapmanq"}
    :concerts { :content-fn cal-content
                :img-name "drawing.jpg"
                :img-caption "Artwork by Marisha Evans"}
-   :teaching { :img-name "drawing.jpg"
-               :img-caption "Artwork by Marisha Evans"}
+   :teaching { :img-name "photo.jpg"
+               :img-caption "Photo by Allegra Chapman"}
    :listen {   :content-fn listen-content
                :img-name "drawing.jpg"
                :img-caption "Artwork by Marisha Evans"}
