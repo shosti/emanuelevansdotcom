@@ -44,7 +44,10 @@ type=\"text/css\" media=\"screen\" /> <![endif]-->")
     compatibility
     analytics
     (include-css "css/style.css")
-    (include-js "js/css3-mediaqueries.js")]
+    (include-js "js/css3-mediaqueries.js")
+    [:link {:href "favicon.ico",
+            :rel "shortcut icon",
+            :type "image/x-icon"}]]
    [:body
     [:div.container
      [:div.row
