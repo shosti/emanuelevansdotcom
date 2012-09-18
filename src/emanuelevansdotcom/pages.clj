@@ -5,7 +5,7 @@
 (def pages
   (array-map
    :about {    :img-name "photo.jpg"
-               :img-caption "Photo by Allegra Chapmanq"}
+               :img-caption "Photo by Allegra Chapman"}
    :concerts { :content-fn cal-content
                :img-name "drawing.jpg"
                :img-caption "Artwork by Marisha Evans"}
