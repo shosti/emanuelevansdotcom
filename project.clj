@@ -8,4 +8,5 @@
                  [hiccup "1.0.0"]
                  [clodown "1.0.2"]
                  [clj-time "0.4.2"]
-                 [clj-http "0.4.3"]])
+                 [clj-http "0.4.3"]
+                 [com.draines/postal "1.8.0"]])
