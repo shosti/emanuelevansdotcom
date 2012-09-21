@@ -38,9 +38,26 @@ task :fetch_cal do
   sh "lein run -m emanuelevansdotcom.cal"
 end
 
+def process_unsubscriptions
+  unsubs_cmd = `mu find maildir:/Unsubscriptions -f f 2> /dev/null`
+  unsubs = unsubs_cmd.split("\n").map {|s| /<(.*)>/.match(s)[1]}
+  unsubs.each do |addr|
+    locs = `mu find maildir:/Subscriptions from:#{addr} -f l 2> /dev/null`
+    locs.split("\n").each do |loc|
+      rm loc
+    end
+  end
+  `mu find maildir:/Unsubscriptions -f l 2> /dev/null`.split("\n").each do |loc|
+    rm loc
+  end
+end
+
 desc 'Make mailing list from maildir'
 task :make_maillist do
-  sh "resources/mail/make_maillist.sh"
+  sh "mu index --autoupgrade > /dev/null"
+  process_unsubscriptions
+  maillist = `mu find maildir:/Subscriptions -f f 2> /dev/null`
+  File.open('resources/mail/maillist', 'w') { |f| f.write maillist}
 end
 
 desc 'Copy static assets to site'
