@@ -6,7 +6,7 @@
             (clj-time           [core :refer [now after?]])))
 
 (def from-email "emanuel.evans@gmail.com")
-(def processed-fname)
+(def processed-fname "resources/mail/processed")
 
 (defn format-event [event]
   (s/join "\n"
@@ -28,13 +28,13 @@
 
 (defn process-event [event maillist]
   (let [status
-        {:error
+        (:error
          (send-message {:from from-email
                         :to ""
                         :bcc maillist
                         :subject (format-subject event)
                         :body [{:type "text/plain; charset=utf-8"
-                                :content (message-body event)}]})}]
+                                :content (message-body event)}]}))]
     (when (= status :SUCCESS)
       (with-open [processed (io/writer processed-fname
                                        :append true)]
@@ -43,9 +43,8 @@
 (defn process-events []
   (let [maillist (s/split-lines
                   (slurp "resources/mail/maillist"))
-        processed (set (try (s/split-lines
-                             (slurp processed-fname))
-                            (catch Exception e)))]
+        processed (set (s/split-lines
+                        (slurp processed-fname)))]
     (doseq [event (events)]
       (when (and (not (processed (:id event)))
                  (after? (:date event) (now)))
