@@ -1,4 +1,4 @@
-(ns emanuelevansdotcom.cal
+ (ns emanuelevansdotcom.cal
   (:refer-clojure :exclude [extend])
   (:require (clojure  [string :as s])
             (clj-http [client :as client])
@@ -29,20 +29,18 @@
         link (first lines)
         desc (filter #(not (= % "")) (rest lines))]
     {:link link
-     :description (interpose [:br] desc)}))
+     :description desc}))
 
 (defn process-location
   [location]
-  {:location
-   (link-to (str "http://maps.google.com/maps?q="
-                 (URLEncoder/encode location))
-            (interpose [:br]
-                       (map s/trim (s/split location #";"))))})
+  {:location-link (str "http://maps.google.com/maps?q="
+                       (URLEncoder/encode location))
+   :location (map s/trim (s/split location #";"))})
 
 (defn process-gcal-event
   [event]
   (-> event
-     (select-keys [:summary])
+     (select-keys [:summary :id])
      (merge {:date (to-time-zone
                     (parse (:dateTime (:start event)))
                     (time-zone-for-id (:timeZone
@@ -130,8 +128,9 @@
               [[:strong (format-date (:date event))]
                [:strong (link-to (:link event)
                                  (:summary event))]
-               (:location event)
-               (:description event)])])
+               (link-to (:location-link event)
+                        (interpose [:br] (:location event)))
+               (interpose [:br] (:description event))])])
 
 (defn cal-content [_]
   (let [events (sort-events (events))
