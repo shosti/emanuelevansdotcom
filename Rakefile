@@ -1,3 +1,5 @@
+require 'tempfile'
+
 css_dir = 'site/css'
 site_stylesheet = css_dir + '/style.css'
 
@@ -33,7 +35,12 @@ end
 
 desc 'Fetch calendar data from gcal'
 task :fetch_cal do
-  sh 'lein run -m emanuelevansdotcom.cal'
+  sh "lein run -m emanuelevansdotcom.cal"
+end
+
+desc 'Make mailing list from maildir'
+task :make_maillist do
+  sh "resources/mail/make_maillist.sh"
 end
 
 desc 'Copy static assets to site'
