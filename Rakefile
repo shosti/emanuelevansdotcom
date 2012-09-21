@@ -60,6 +60,11 @@ task :make_maillist do
   File.open('resources/mail/maillist', 'w') { |f| f.write maillist}
 end
 
+desc 'Send maillist messages'
+task :mail => [:make_maillist, 'resources/mail/processed'] do
+  sh "lein run -m emanuelevansdotcom.mail"
+end
+
 desc 'Copy static assets to site'
 task :assets => [:encode_audio, :optimize_img] do
   sh 'rsync -a resources/assets/ site --exclude=".*"'

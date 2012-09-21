@@ -49,3 +49,7 @@
       (when (and (not (processed (:id event)))
                  (after? (:date event) (now)))
         (process-event event maillist)))))
+
+(defn -main [& args]
+  (println "Sending mail...")
+  (process-events))

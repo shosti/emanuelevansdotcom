@@ -73,7 +73,7 @@
         (get-gcal-json (cal-id) (api-key))))
 
 (defn -main [& args]
-  (prn "Fetching calendar...")
+  (println "Fetching calendar...")
   (fetch-cal))
 
 "# Generate html from event list"
