@@ -1,5 +1,3 @@
-require 'tempfile'
-
 css_dir = 'site/css'
 site_stylesheet = css_dir + '/style.css'
 
@@ -61,7 +59,7 @@ task :make_maillist do
 end
 
 desc 'Send maillist messages'
-task :mail => [:make_maillist, 'resources/mail/processed'] do
+task :mail => :make_maillist do
   sh "lein run -m emanuelevansdotcom.mail"
 end
 
