@@ -146,7 +146,7 @@
         upcoming])
      (if-let [past
               (seq (map format-event
-                        (take 10 (:past events))))]
+                        (take 5 (:past events))))]
        [[:h3 "Past"]
         past])
      [[:p.caption
