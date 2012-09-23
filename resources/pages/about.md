@@ -18,9 +18,9 @@ In 2011, as a member of the NEC Honors Competition-winning Canoro
 Quartet, he performed in Jordan Hall with Roger Tapping.  An avid
 proponent of twentieth- and twenty-first-century music, Emanuel has
 premiered several works by young composers including Derek Sherron and
-Shen Yiwen.
+[Shen Yiwen](http://www.shenyiwen.com/).
 
-Emanuel's principal teachers include Natasha Brofsky, Paul Katz,
+Emanuel's former teachers include Natasha Brofsky, Paul Katz,
 Sophie Shao, and Peter Wiley.  He completed his undergraduate studies
 at the Bard College Conservatory of Music, where he was the recipient
 of the George Martin/Hans Thatcher Clarke Scholarship, and received a
