@@ -28,7 +28,8 @@ end
 
 desc 'Optimize images'
 task :optimize_img do
-  sh "jpegoptim --strip-all resources/assets/images/*.jpg"
+  sh "jpegoptim --strip-all --quiet resources/assets/images/*.jpg"
+  sh "optipng -quiet resources/assets/images/*.png"
 end
 
 desc 'Fetch calendar data from gcal'
