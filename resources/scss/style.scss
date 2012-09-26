@@ -2,15 +2,15 @@
 
 // Shades of gray
 
-$gray1: rgb(49, 51, 48);
+$gray1: rgb(23, 23, 23);
 $gray2: rgb(70, 70, 70);
 $gray3: rgb(100, 100, 100);
 $gray4: rgb(139, 140, 139);
-$gray5: rgb(217, 217, 217);
+$gray5: rgb(190, 190, 190);
 $side-margin: 15px;
 
 body {
-  background-color: $gray1;
+  background: $gray1 url('../images/black_paper.png') repeat;
   color: $gray5;
   font-family: Palatino, 'Palatino Linotype', 'Book Antiqua', serif;
 }
