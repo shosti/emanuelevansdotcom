@@ -51,7 +51,7 @@ type=\"text/css\" media=\"screen\" /> <![endif]-->")
    [:body
     [:div.container
      [:div.row
-      [:div.sixcol.info
+      [:div.sixcol.content
        [:div
         [:h1 "Emanuel Evans"]
         [:h2 "Cellist"]]
