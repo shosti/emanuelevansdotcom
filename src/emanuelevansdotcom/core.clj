@@ -22,7 +22,7 @@
                       :content (content-fn page-name)}))))
 
 (defn generate-sitemap []
-  (spit "site/sitemap.txt"
+  (spit "_site/sitemap.txt"
         (s/join "\n"
                 (map #(str "http://www.emanuelevans.com/" % ".html")
                      page-names))))
@@ -33,7 +33,7 @@
 
 (defn generate-html []
   (doseq [html-page html-pages]
-    (spit (str "site/" (first html-page) ".html")
+    (spit (str "_site/" (first html-page) ".html")
           (html-page 1))))
 
 (defn -main

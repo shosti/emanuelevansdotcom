@@ -1,20 +1,20 @@
-css_dir = 'site/css'
+css_dir = '_site/css'
 site_stylesheet = css_dir + '/style.css'
 
-directory 'site'
+directory '_site'
 directory css_dir
 
 gzip_exts = ['html', 'css', 'js']
-gz_deploy_dir = 'deploy/gz'
-ungz_deploy_dir = 'deploy/ungz'
+gz_deploy_dir = '_deploy/gz'
+ungz_deploy_dir = '_deploy/ungz'
 directory gz_deploy_dir
 directory ungz_deploy_dir
 
 desc 'Generate the html for the site'
-task :html => 'site' do
+task :html => '_site' do
   gen_files = Dir.glob('src/emanuelevansdotcom/*') +
     Dir.glob('resources/pages/*') + Dir.glob('resources/audio/*')
-  sh 'lein run' unless uptodate? 'site/about.html', gen_files
+  sh 'lein run' unless uptodate? '_site/about.html', gen_files
 end
 
 desc 'Encode mp3 and ogg versions of audio files'
@@ -72,7 +72,7 @@ end
 
 desc 'Copy static assets to site'
 task :assets => [:encode_audio, :optimize_img] do
-  sh 'rsync -a resources/assets/ site --exclude=".*"'
+  sh 'rsync -a resources/assets/ _site --exclude=".*"'
 end
 
 desc 'Compile scss to css'
@@ -83,9 +83,9 @@ end
 desc 'Copy gzipped static assets to their own folder'
 task :gz => [:build_site, gz_deploy_dir] do
   filter_rules = gzip_exts.map {|ext| "--include '*.#{ext}'"}.join " "
-  sh "rsync -a site/ #{gz_deploy_dir} --include '*/' #{filter_rules} --exclude '*'"
+  sh "rsync -a _site/ #{gz_deploy_dir} --include '*/' #{filter_rules} --exclude '*'"
   base_dir = Dir.getwd
-  (gzip_exts + ['']).map {|s| "#{base_dir}/deploy/gz/#{s}"}.each do |dir|
+  (gzip_exts + ['']).map {|s| "#{base_dir}/_deploy/gz/#{s}"}.each do |dir|
     if File.directory? dir
       cd dir
       Dir.glob('*.*').each do |f|
@@ -100,24 +100,23 @@ end
 desc 'Copy non-gzipped static assets to their own folder'
 task :ungz => [:build_site, ungz_deploy_dir] do
   filter_rules = gzip_exts.map {|ext| "--exclude '*.#{ext}'"}.join " "
-  sh "rsync -a site/ #{ungz_deploy_dir} #{filter_rules}"
+  sh "rsync -a _site/ #{ungz_deploy_dir} #{filter_rules}"
 end
 
-desc 'Deploy website to S3'
-task :deploy => [:ungz, :gz] do
-  sh 's3cmd sync deploy/ungz/ s3://www.emanuelevans.com --exclude=".DS_Store"'
-  sh 's3cmd sync deploy/gz/ s3://www.emanuelevans.com --exclude=".DS_Store" --add-header "Content-Encoding: gzip"'
+task :s3 => [:ungz, :gz] do
+  sh "s3cmd sync #{ungz_deploy_dir}/ s3://www.emanuelevans.com --exclude='.DS_Store'"
+  sh "s3cmd sync #{gz_deploy_dir}/ s3://www.emanuelevans.com --exclude='.DS_Store' --add-header 'Content-Encoding: gzip'"
 end
 
 desc 'Clean site directory'
 task :clean do
-  rm_rf 'site'
-  rm_rf 'deploy'
+  rm_rf '_site'
+  rm_rf '_deploy'
 end
 
 desc 'Preview site'
 task :preview => :build_site do
-  sh 'open site/about.html'
+  sh 'open _site/about.html'
 end
 
 desc 'Build site'
