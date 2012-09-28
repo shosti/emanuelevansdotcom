@@ -13,4 +13,5 @@ pom.xml
 .lein-plugins
 .sass-cache
 /site
+/deploy
 /resources/pages/cal.json
