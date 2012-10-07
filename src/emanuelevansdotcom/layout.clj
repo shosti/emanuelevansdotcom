@@ -3,7 +3,8 @@
             (clojure [string  :as s])
             (hiccup  [core    :refer [html]]
                      [element :refer [link-to image]]
-                     [page    :refer [html5 include-css include-js]])))
+                     [page    :refer [html5 include-css include-js]]
+                     [form :as f])))
 
 (def compatibility
   "<!--[if lte IE 9]> <link rel=\"stylesheet\" href=\"css/ie.css\"
@@ -34,6 +35,16 @@ type=\"text/css\" media=\"screen\" /> <![endif]-->")
                                 (s/capitalize page))))
                    page-names))])
 
+(def subscribe-form
+  [:p.subscribe
+   [:br] [:br]
+   "Subscribe to my mailing list" [:br]
+   (f/form-to [:post "http://localhost:5000/subscribe"]
+       [:input {:type "email"
+                :name "email"
+                :placeholder "Email"}]
+     (f/submit-button "Subscribe"))])
+
 (defn site-page [{:keys [page-name content img-name img-caption]}]
   (html5 {:lang "en-us"}
    [:head
@@ -44,7 +55,8 @@ type=\"text/css\" media=\"screen\" /> <![endif]-->")
     compatibility
     analytics
     (include-css "css/style.css")
-    (include-js "js/css3-mediaqueries.js")
+    (include-js "//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js")
+    (include-js "js/scripts.js")
     [:link {:href "favicon.ico",
             :rel "shortcut icon",
             :type "image/x-icon"}]]
@@ -59,4 +71,5 @@ type=\"text/css\" media=\"screen\" /> <![endif]-->")
        content]
       [:div.sixcol.last.picture
        (image (str "images/" img-name) "")
-       [:div.caption img-caption]]]]]))
+       [:div.caption img-caption]
+       subscribe-form]]]]))

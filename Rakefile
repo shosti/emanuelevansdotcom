@@ -3,6 +3,7 @@ site_stylesheet = css_dir + '/style.css'
 
 directory '_site'
 directory css_dir
+directory '_site/js'
 
 gzip_exts = ['html', 'css', 'js']
 gz_deploy_dir = '_deploy/gz'
@@ -80,6 +81,13 @@ file site_stylesheet => ['resources/scss/style.scss', css_dir] do |t|
   sh "scss #{t.prerequisites[0]} #{t.name} --style compressed"
 end
 
+
+desc 'Combine and minify js'
+task :js => '_site/js' do
+  out_file = '_site/js/scripts.js'
+  sh "cat resources/js/*.js | uglifyjs -o #{out_file}"
+end
+
 desc 'Copy gzipped static assets to their own folder'
 task :gz => [:build_site, gz_deploy_dir] do
   filter_rules = gzip_exts.map {|ext| "--include '*.#{ext}'"}.join " "
@@ -120,6 +128,6 @@ task :preview => :build_site do
 end
 
 desc 'Build site'
-task :build_site => [site_stylesheet, :assets, :html]
+task :build_site => [site_stylesheet, :js, :assets, :html]
 
 task :default => :build_site
