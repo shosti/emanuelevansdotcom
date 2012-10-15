@@ -85,7 +85,10 @@ end
 desc 'Combine and minify js'
 task :js => '_site/js' do
   out_file = '_site/js/scripts.js'
-  sh "cat resources/js/*.js | uglifyjs -o #{out_file}"
+  sh "coffee -c resources/coffee/*.coffee"
+  sh "cat resources/js/*.js resources/coffee/*.js > scripts.max.js"
+  sh "uglifyjs scripts.max.js > _site/js/scripts.js"
+  rm 'scripts.max.js'
 end
 
 desc 'Copy gzipped static assets to their own folder'
@@ -130,4 +133,5 @@ end
 desc 'Build site'
 task :build_site => [site_stylesheet, :js, :assets, :html]
 
+task :deploy => :s3
 task :default => :build_site

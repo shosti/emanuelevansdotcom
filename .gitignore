@@ -5,6 +5,7 @@
 /resources/private
 /resources/audio
 /resources/assets/audio
+/resources/coffee/*.js
 pom.xml
 *.jar
 *.class

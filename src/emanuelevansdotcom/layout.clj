@@ -6,6 +6,8 @@
                      [page    :refer [html5 include-css include-js]]
                      [form :as f])))
 
+(def domain "http://www.emanuelevans.com")
+
 (def compatibility
   "<!--[if lte IE 9]> <link rel=\"stylesheet\" href=\"css/ie.css\"
 type=\"text/css\" media=\"screen\" /> <![endif]-->")
@@ -35,15 +37,19 @@ type=\"text/css\" media=\"screen\" /> <![endif]-->")
                                 (s/capitalize page))))
                    page-names))])
 
-(def subscribe-form
+(defn subscribe-form [active-page]
   [:p.subscribe
    [:br] [:br]
    "Subscribe to my mailing list" [:br]
-   (f/form-to [:post "http://localhost:5000/subscribe"]
-       [:input {:type "email"
-                :name "email"
-                :placeholder "Email"}]
-     (f/submit-button "Subscribe"))])
+   [:form#subsform {:method "POST"
+                    :action "http://localhost:5000/subscribe"}
+    [:input {:type "email"
+             :name "email"
+             :placeholder "Email"}]
+    [:input {:type "hidden"
+             :name "redirect"
+             :value (str domain "/" active-page ".html")}]
+    (f/submit-button "Subscribe")]])
 
 (defn site-page [{:keys [page-name content img-name img-caption]}]
   (html5 {:lang "en-us"}
@@ -55,7 +61,7 @@ type=\"text/css\" media=\"screen\" /> <![endif]-->")
     compatibility
     analytics
     (include-css "css/style.css")
-    (include-js "//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js")
+    (include-js "http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js")
     (include-js "js/scripts.js")
     [:link {:href "favicon.ico",
             :rel "shortcut icon",
@@ -72,4 +78,4 @@ type=\"text/css\" media=\"screen\" /> <![endif]-->")
       [:div.sixcol.last.picture
        (image (str "images/" img-name) "")
        [:div.caption img-caption]
-       subscribe-form]]]]))
+       (subscribe-form page-name)]]]]))
