@@ -41,7 +41,7 @@ type=\"text/css\" media=\"screen\" /> <![endif]-->")
   [:p.subscribe
    [:br] [:br]
    "Subscribe to my mailing list" [:br]
-   [:form#subsform {:method "POST"
+   [:form#subscribe {:method "POST"
                     :action "http://localhost:5000/subscribe"}
     [:input {:type "email"
              :name "email"

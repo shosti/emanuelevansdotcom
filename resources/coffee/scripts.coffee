@@ -7,7 +7,7 @@ flashMessage = (status, message, form) ->
       .text(message)
       .insertAfter(form)
       .fadeIn()
-      .delay(1500)
+      .delay(2000)
       .fadeOut()
 
 ajaxifyForms = ->
@@ -28,8 +28,8 @@ ajaxifyForms = ->
 $ ->
   status = getParam('status')
   message = getParam('message')
+  action = getParam('action')
 
-  #FIXME
-  flashMessage(status, message, $('#subsform')) if status and message
+  flashMessage(status, message, $('#' + action)) if status and message
 
   ajaxifyForms()
