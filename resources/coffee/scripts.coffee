@@ -1,25 +1,28 @@
-statusClasses = ['error', 'success']
+statuses = ['error', 'success']
 
 flashMessage = (status, message, form) ->
-  if status in statusClasses
+  if status in statuses
     $('<p></p>')
       .addClass('hidden ' + status)
       .text(message)
       .insertAfter(form)
       .fadeIn()
       .delay(1500)
-      .fadeout()
+      .fadeOut()
 
 ajaxifyForms = ->
-  if $.support.cors or XDomainRequest?
+  if $.support.cors or $.support.iecors
     $('form').submit (event) ->
+      form = this
+      action = $(form).attr('action') + '.json'
+      data = $(form).serialize()
+      form.reset()
       event.preventDefault()
-      this.reset()
       $.post(
-        $(this).attr('action') + '.json'
-        $(this).serialize()
+        action
+        data
         (data, textStatus, jqXHR) ->
-          flashMessage(data.status, data.message, $(this))
+          flashMessage(data.status, data.message, $(form))
       )
 
 $ ->
