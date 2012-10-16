@@ -1,12 +1,11 @@
 (ns emanuelevansdotcom.layout
   (:require (emanuelevansdotcom [pages :refer [page-names]])
             (clojure [string  :as s])
+            (environ [core :refer [env]])
             (hiccup  [core    :refer [html]]
                      [element :refer [link-to image]]
                      [page    :refer [html5 include-css include-js]]
                      [form :as f])))
-
-(def domain "http://www.emanuelevans.com")
 
 (def compatibility
   "<!--[if lte IE 9]> <link rel=\"stylesheet\" href=\"css/ie.css\"
@@ -42,13 +41,13 @@ type=\"text/css\" media=\"screen\" /> <![endif]-->")
    [:br] [:br]
    "Subscribe to my mailing list" [:br]
    [:form#subscribe {:method "POST"
-                    :action "http://localhost:5000/subscribe"}
+                     :action (str (env :api-url) "/subscribe")}
     [:input {:type "email"
              :name "email"
              :placeholder "Email"}]
     [:input {:type "hidden"
              :name "redirect"
-             :value (str domain "/" active-page ".html")}]
+             :value (str (env :domain) "/" active-page ".html")}]
     (f/submit-button "Subscribe")]])
 
 (defn site-page [{:keys [page-name content img-name img-caption]}]

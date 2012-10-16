@@ -9,4 +9,9 @@
                  [clodown "1.0.2"]
                  [clj-time "0.4.2"]
                  [clj-http "0.4.3"]
-                 [com.draines/postal "1.8.0"]])
+                 [com.draines/postal "1.8.0"]
+                 [environ "0.3.0"]]
+  :profiles {:dev {:env {:api-url "http://api.emanuelevans.com"
+                         :api-url-secure
+                         "https://emanuelevans-api.herokuapp.com"
+                         :domain "http://www.emanuelevans.com"}}})
