@@ -58,8 +58,8 @@ type=\"text/css\" media=\"screen\" /> <![endif]-->")
     [:meta {:name "viewport",
             :content "width=device-width, initial-scale=1.0"}]
     compatibility
-    analytics
     (include-css "css/style.css")
+    analytics
     (include-js "http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js")
     (include-js "js/scripts.js")
     [:link {:href "favicon.ico",
