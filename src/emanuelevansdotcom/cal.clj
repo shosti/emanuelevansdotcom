@@ -150,11 +150,7 @@
        [[:h3 "Past"]
         past])
      [[:p.caption
-       "To subscribe to my mailing list, send an email to "
-       (let [subscription-address "subscribe@emanuelevans.com"]
-         (link-to (str "mailto:" subscription-address)
-                  subscription-address))
-       ".  You can also subscribe with "
+       "You can subscribe to my concerts calendar with "
        (link-to
         (str "http://www.google.com/calendar/render?cid="
              ical-address)

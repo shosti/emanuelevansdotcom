@@ -23,7 +23,12 @@ ajaxifyForms = ->
         data
         (data, textStatus, jqXHR) ->
           flashMessage(data.status, data.message, $(form))
+      ).error((jqXHR) ->
+        flashMessage('error'
+          'Website error, please try again later'
+          $(form))
       )
+
 
 $ ->
   status = getParam('status')

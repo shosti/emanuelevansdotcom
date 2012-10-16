@@ -15,7 +15,7 @@ desc 'Generate the html for the site'
 task :html => '_site' do
   gen_files = Dir.glob('src/emanuelevansdotcom/*') +
     Dir.glob('resources/pages/*') + Dir.glob('resources/audio/*')
-  sh 'lein run' unless uptodate? '_site/about.html', gen_files
+  sh 'lein with-profile dev run' unless uptodate? '_site/about.html', gen_files
 end
 
 desc 'Encode mp3 and ogg versions of audio files'
