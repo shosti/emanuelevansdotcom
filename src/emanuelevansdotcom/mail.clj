@@ -35,11 +35,12 @@
   (println "Sending message with id " id)
   (let [response
         (json/parse-string
-         (client/post (str (env :api-url-secure)
-                           "/send-maillist-message")
-                      {:basic-auth [(env :api-user) (env :api-key)]
-                       :form-params {:body body
-                                     :subject subject}}))]
+         (:body
+          (client/post (str (env :api-url-secure)
+                            "/send-maillist-message")
+                       {:basic-auth [(env :api-user) (env :api-key)]
+                        :form-params {:body body
+                                      :subject subject}})))]
     (when (= (response "status") "success")
       (with-open [processed (io/writer processed-fname
                                        :append true)]

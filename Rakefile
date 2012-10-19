@@ -44,30 +44,8 @@ task :fetch_cal do
   sh "lein run -m emanuelevansdotcom.cal"
 end
 
-def process_unsubscriptions
-  unsubs_cmd = `mu find maildir:/Unsubscriptions -f f 2> /dev/null`
-  unsubs = unsubs_cmd.split("\n").map {|s| /<(.*)>/.match(s)[1]}
-  unsubs.each do |addr|
-    locs = `mu find maildir:/Subscriptions from:#{addr} -f l 2> /dev/null`
-    locs.split("\n").each do |loc|
-      rm loc
-    end
-  end
-  `mu find maildir:/Unsubscriptions -f l 2> /dev/null`.split("\n").each do |loc|
-    rm loc
-  end
-end
-
-desc 'Make mailing list from maildir'
-task :make_maillist do
-  sh "mu index --autoupgrade > /dev/null"
-  process_unsubscriptions
-  maillist = `mu find maildir:/Subscriptions -f f 2> /dev/null`
-  File.open('resources/mail/maillist', 'w') { |f| f.write maillist}
-end
-
 desc 'Send maillist messages'
-task :mail => :make_maillist do
+task :mail do
   sh "lein run -m emanuelevansdotcom.mail"
 end
 
@@ -114,9 +92,14 @@ task :ungz => [:build_site, ungz_deploy_dir] do
   sh "rsync -a _site/ #{ungz_deploy_dir} #{filter_rules}"
 end
 
+require 'time'
 task :s3 => [:ungz, :gz] do
-  sh "s3cmd sync #{ungz_deploy_dir}/ s3://www.emanuelevans.com --exclude='.DS_Store'"
-  sh "s3cmd sync #{gz_deploy_dir}/ s3://www.emanuelevans.com --exclude='.DS_Store' --add-header 'Content-Encoding: gzip'"
+  expiration_date = (Time.utc(Time.now.year + 2))
+  exp_header = "Expires: #{expiration_date.rfc822}"
+  cache_header = "Cache-Control: max-age=#{60 * 60 * 24 * 365}, public"
+  headers = "--add-header '#{exp_header}' --add-header '#{cache_header}'"
+  sh "s3cmd sync #{ungz_deploy_dir}/ s3://www.emanuelevans.com --exclude='.DS_Store' #{headers} --force"
+  sh "s3cmd sync #{gz_deploy_dir}/ s3://www.emanuelevans.com --exclude='.DS_Store' --add-header 'Content-Encoding: gzip' #{headers} --force"
 end
 
 desc 'Clean site directory'

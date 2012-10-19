@@ -37,7 +37,7 @@ type=\"text/css\" media=\"screen\" /> <![endif]-->")
                    page-names))])
 
 (defn subscribe-form [active-page]
-  [:p.subscribe
+  [:div.subscribe
    [:br] [:br]
    "Subscribe to my mailing list" [:br]
    [:form#subscribe {:method "POST"
@@ -57,11 +57,11 @@ type=\"text/css\" media=\"screen\" /> <![endif]-->")
     [:title "Emanuel Evans, Cellist - " (s/capitalize page-name)]
     [:meta {:name "viewport",
             :content "width=device-width, initial-scale=1.0"}]
-    compatibility
     (include-css "css/style.css")
-    analytics
+    compatibility
     (include-js "http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js")
     (include-js "js/scripts.js")
+    analytics
     [:link {:href "favicon.ico",
             :rel "shortcut icon",
             :type "image/x-icon"}]]
