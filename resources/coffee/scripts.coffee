@@ -3,7 +3,8 @@ statuses = ['error', 'success']
 flashMessage = (status, message, form) ->
   if status in statuses
     $('<p></p>')
-      .addClass('hidden ' + status)
+      .css('display', 'none')
+      .addClass(status)
       .text(message)
       .insertAfter(form)
       .fadeIn()
