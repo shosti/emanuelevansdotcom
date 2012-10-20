@@ -98,8 +98,8 @@ task :s3 => [:ungz, :gz] do
   exp_header = "Expires: #{expiration_date.rfc822}"
   cache_header = "Cache-Control: max-age=#{60 * 60 * 24 * 365}, public"
   headers = "--add-header '#{exp_header}' --add-header '#{cache_header}'"
-  sh "s3cmd sync #{ungz_deploy_dir}/ s3://www.emanuelevans.com --exclude='.DS_Store' #{headers} --force"
-  sh "s3cmd sync #{gz_deploy_dir}/ s3://www.emanuelevans.com --exclude='.DS_Store' --add-header 'Content-Encoding: gzip' #{headers} --force"
+  sh "s3cmd sync #{ungz_deploy_dir}/ s3://www.emanuelevans.com --exclude='.DS_Store' #{headers}"
+  sh "s3cmd sync #{gz_deploy_dir}/ s3://www.emanuelevans.com --exclude='.DS_Store' --add-header 'Content-Encoding: gzip' #{headers}"
 end
 
 desc 'Clean site directory'

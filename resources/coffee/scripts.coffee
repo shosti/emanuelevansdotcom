@@ -16,14 +16,15 @@ ajaxifyForms = ->
     $('form').submit (event) ->
       form = this
       action = $(form).attr('action') + '.json'
-      data = $(form).serialize()
+      formData = $(form).serialize()
       form.reset()
       event.preventDefault()
       $.post(
         action
-        data
+        formData
         (data, textStatus, jqXHR) ->
           flashMessage(data.status, data.message, $(form))
+        'json'
       ).error((jqXHR) ->
         flashMessage('error'
           'Website error, please try again later'
