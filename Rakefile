@@ -5,7 +5,7 @@ directory '_site'
 directory css_dir
 directory '_site/js'
 
-gzip_exts = ['html', 'css', 'js']
+gzip_exts = ['html', 'css', 'js', 'txt', 'ico']
 gz_deploy_dir = '_deploy/gz'
 ungz_deploy_dir = '_deploy/ungz'
 directory gz_deploy_dir

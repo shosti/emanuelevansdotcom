@@ -57,14 +57,14 @@ type=\"text/css\" media=\"screen\" /> <![endif]-->")
     [:title "Emanuel Evans, Cellist - " (s/capitalize page-name)]
     [:meta {:name "viewport",
             :content "width=device-width, initial-scale=1.0"}]
+    [:link {:href "favicon.ico",
+            :rel "shortcut icon",
+            :type "image/x-icon"}]
     (include-css "css/style.css")
     compatibility
     (include-js "http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js")
     (include-js "js/scripts.js")
-    analytics
-    [:link {:href "favicon.ico",
-            :rel "shortcut icon",
-            :type "image/x-icon"}]]
+    analytics]
    [:body
     [:div.container
      [:div.row
