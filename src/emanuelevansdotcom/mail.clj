@@ -8,7 +8,6 @@
             (clj-time           [core :refer [now after?]])
             (environ [core :refer [env]])))
 
-(def from-email "emanuel.evans@gmail.com")
 (def processed-fname "resources/mail/processed")
 (def signature-fname "resources/mail/signature")
 
