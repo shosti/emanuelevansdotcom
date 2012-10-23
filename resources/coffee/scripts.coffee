@@ -33,6 +33,11 @@ ajaxifyForms = ->
 
 
 $ ->
+  if $.support.iecors
+    $.ajaxSetup(
+      contentType: 'text/plain; charset=utf-8'
+    )
+
   status = getParam('status')
   message = getParam('message')
   action = getParam('action')
