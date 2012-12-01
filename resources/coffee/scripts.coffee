@@ -12,7 +12,7 @@ flashMessage = (status, message, form) ->
       .fadeOut()
 
 ajaxifyForms = ->
-  if $.support.cors or $.support.iecors
+  if $.support.cors
     $('form').submit (event) ->
       form = this
       action = $(form).attr('action') + '.json'
@@ -31,13 +31,7 @@ ajaxifyForms = ->
           $(form))
       )
 
-
 $ ->
-  if $.support.iecors
-    $.ajaxSetup(
-      contentType: 'text/plain; charset=utf-8'
-    )
-
   status = getParam('status')
   message = getParam('message')
   action = getParam('action')
